@@ -2,19 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const RecipeModel = require("./model/recipe.model");
-const cors=require('cors')
+const cors=require('cors');
+const { getRecipes } = require("./controllers/recipe.controllers");
 app.use(express.json());
 
 app.use(cors())
 
-app.get("/api/v1/recipes", async function (req, res) {
-  try {
-    const recipes = await RecipeModel.find();
-    res.status(200).json({ status: "Success", data: recipes });
-  } catch (error) {
-    res.status(500).json({ status: "Error", error: error.message });
-  }
-});
+app.get("/api/v1/recipes", getRecipes);
 
 app.post("/api/v1/recipes", async function (req, res) {
   try {
